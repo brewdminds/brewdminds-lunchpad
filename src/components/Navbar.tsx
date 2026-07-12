@@ -1,5 +1,9 @@
-import { Link } from "@tanstack/react-router";
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+
 import { Logo } from "./Logo";
 
 const links = [
@@ -10,7 +14,12 @@ const links = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
+function isActive(pathname: string, to: string) {
+  return to === "/" ? pathname === "/" : pathname.startsWith(to);
+}
+
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -32,19 +41,21 @@ export function Navbar() {
       <div className="container-page flex h-18 items-center justify-between py-4">
         <Logo />
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="font-body hidden md:flex items-center gap-8">
           {links.map((l) => (
             <Link
               key={l.to}
-              to={l.to}
-              className="text-sm font-medium text-[color:var(--ink)]/80 hover:text-[color:var(--ember)] transition-colors link-underline"
-              activeProps={{ className: "text-[color:var(--ember)]" }}
-              activeOptions={{ exact: l.to === "/" }}
+              href={l.to}
+              className={`text-sm font-medium transition-colors link-underline ${
+                isActive(pathname, l.to)
+                  ? "text-[color:var(--ember)]"
+                  : "text-[color:var(--ink)]/80 hover:text-[color:var(--ember)]"
+              }`}
             >
               {l.label}
             </Link>
           ))}
-          <Link to="/contact" className="btn-primary text-sm">
+          <Link href="/contact" className="btn-primary text-sm">
             <ion-icon name="chatbubbles-outline" aria-hidden="true"></ion-icon>
             Get in Touch
           </Link>
@@ -70,16 +81,16 @@ export function Navbar() {
           {links.map((l) => (
             <Link
               key={l.to}
-              to={l.to}
+              href={l.to}
               onClick={() => setOpen(false)}
-              className="text-base font-medium text-[color:var(--ink)]"
-              activeProps={{ className: "text-[color:var(--ember)]" }}
-              activeOptions={{ exact: l.to === "/" }}
+              className={`text-base font-medium ${
+                isActive(pathname, l.to) ? "text-[color:var(--ember)]" : "text-[color:var(--ink)]"
+              }`}
             >
               {l.label}
             </Link>
           ))}
-          <Link to="/contact" onClick={() => setOpen(false)} className="btn-primary self-start mt-2">
+          <Link href="/contact" onClick={() => setOpen(false)} className="btn-primary self-start mt-2">
             Get in Touch
           </Link>
         </div>

@@ -1,4 +1,7 @@
-import { Link } from "@tanstack/react-router";
+"use client";
+
+import Link from "next/link";
+
 import { Logo } from "./Logo";
 
 const socials = [
@@ -43,7 +46,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-widest mb-4">Explore</h4>
+          <h4 className="text-sm uppercase tracking-widest mb-4">Explore</h4>
           <ul className="space-y-2 text-sm">
             {[
               { to: "/", label: "Home" },
@@ -53,7 +56,7 @@ export function Footer() {
               { to: "/contact", label: "Contact" },
             ].map((l) => (
               <li key={l.to}>
-                <Link to={l.to} className="hover:text-[color:var(--ember)] transition-colors">
+                <Link href={l.to} className="hover:text-[color:var(--ember)] transition-colors">
                   {l.label}
                 </Link>
               </li>
@@ -62,11 +65,11 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-widest mb-4">What we do</h4>
+          <h4 className="text-sm uppercase tracking-widest mb-4">What we do</h4>
           <ul className="space-y-2 text-sm">
             {pillars.map((p) => (
               <li key={p}>
-                <Link to="/services" className="hover:text-[color:var(--ember)] transition-colors">
+                <Link href="/services" className="hover:text-[color:var(--ember)] transition-colors">
                   {p}
                 </Link>
               </li>
@@ -75,7 +78,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-widest mb-4">Say hello</h4>
+          <h4 className="text-sm uppercase tracking-widest mb-4">Say hello</h4>
           <ul className="space-y-3 text-sm">
             <li className="flex items-center gap-3">
               <ion-icon name="mail-outline" style={{ fontSize: "18px", color: "var(--ember)" }}></ion-icon>
@@ -92,16 +95,16 @@ export function Footer() {
           </ul>
 
           <form
-            className="mt-6 flex items-center gap-2 rounded-full bg-white p-1.5 pl-4 shadow-sm"
+            className="mt-6 flex w-full items-center gap-2 rounded-full bg-white p-1.5 pl-4 shadow-sm"
             onSubmit={(e) => e.preventDefault()}
           >
             <input
               type="email"
               required
               placeholder="Your email"
-              className="flex-1 bg-transparent text-sm outline-none placeholder:text-[color:var(--ink)]/50"
+              className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[color:var(--ink)]/50"
             />
-            <button type="submit" className="btn-primary !py-2 !px-4 text-xs">
+            <button type="submit" className="btn-primary shrink-0 !py-2 !px-4 text-xs">
               Subscribe
             </button>
           </form>
@@ -112,8 +115,12 @@ export function Footer() {
         <div className="container-page py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-[color:var(--ink)]/70">
           <p>© {new Date().getFullYear()} Brewdminds. Crafted with intent.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-[color:var(--ember)]">Privacy Policy</a>
-            <a href="#" className="hover:text-[color:var(--ember)]">Terms</a>
+            <a href="#" className="hover:text-[color:var(--ember)]">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-[color:var(--ember)]">
+              Terms
+            </a>
           </div>
         </div>
       </div>

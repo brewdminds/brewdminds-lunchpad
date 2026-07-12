@@ -1,18 +1,10 @@
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 
-export function Logo({ tone = "ink" }: { tone?: "ink" | "cream" }) {
-  const color = tone === "cream" ? "text-[color:var(--ink)]" : "text-[color:var(--ink)]";
+export function Logo() {
   return (
-    <Link to="/" className={`inline-flex items-center gap-2 ${color}`} aria-label="Brewdminds home">
-      <span
-        aria-hidden
-        className="grid h-9 w-9 place-items-center rounded-full bg-[color:var(--ember)] text-white font-semibold text-sm"
-      >
-        B
-      </span>
-      <span className="text-xl font-semibold tracking-tight">
-        Brewd<span className="text-[color:var(--ember)]">minds</span>
-      </span>
+    <Link href="/" className="inline-flex items-center" aria-label="Brewdminds home">
+      {/* eslint-disable-next-line @next/next/no-img-element -- static brand SVG, no next/image optimization needed */}
+      <img src="/logo-colored.svg" alt="" width={160} height={108} className="h-14 w-auto" />
     </Link>
   );
 }
