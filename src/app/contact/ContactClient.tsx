@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+
+import { sendContactEmail, type ContactFormState } from "./actions";
 
 const contactInfo = [
   { icon: "mail-outline", label: "Email", value: "hello@brewdminds.com" },
@@ -16,8 +19,10 @@ const socials = [
   { icon: "logo-youtube", name: "YouTube", href: "https://youtube.com" },
 ];
 
+const initialState: ContactFormState = { status: "idle" };
+
 export function ContactClient() {
-  const [sent, setSent] = useState(false);
+  const [state, formAction] = useActionState(sendContactEmail, initialState);
 
   return (
     <>
@@ -39,7 +44,7 @@ export function ContactClient() {
       <section className="container-page pb-24">
         <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr]">
           <div className="rounded-3xl border border-[color:var(--border)] bg-white p-8 md:p-10">
-            {sent ? (
+            {state.status === "success" ? (
               <div className="text-center py-16">
                 <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-[color:var(--cream)] text-[color:var(--ember)]">
                   <ion-icon name="checkmark-outline" style={{ fontSize: "28px" }}></ion-icon>
@@ -48,13 +53,19 @@ export function ContactClient() {
                 <p className="mt-2 text-[color:var(--ink)]/70">We'll be in touch within 24 hours.</p>
               </div>
             ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSent(true);
-                }}
-                className="grid gap-5"
-              >
+              <form action={formAction} className="grid gap-5">
+                {/* Honeypot — hidden from real visitors, left off-screen rather
+                    than display:none so simple bots that check computed style
+                    still fill it in. */}
+                <input
+                  type="text"
+                  name="company_site"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden opacity-0"
+                />
+
                 <div className="grid gap-5 sm:grid-cols-2">
                   <Field label="Name" name="name" placeholder="Your full name" required />
                   <Field label="Email" name="email" type="email" placeholder="you@brand.com" required />
@@ -65,7 +76,11 @@ export function ContactClient() {
                 </div>
                 <div>
                   <label className="text-sm font-medium text-[color:var(--ink)]">Service of interest</label>
-                  <select className="mt-2 w-full rounded-xl border border-[color:var(--border)] bg-white px-4 py-3 text-sm outline-none focus:border-[color:var(--ember)]">
+                  <select
+                    name="service"
+                    defaultValue="Not sure yet — let's talk"
+                    className="mt-2 w-full rounded-xl border border-[color:var(--border)] bg-white px-4 py-3 text-sm outline-none focus:border-[color:var(--ember)]"
+                  >
                     <option>Not sure yet — let's talk</option>
                     <option>Brand Strategy & Positioning</option>
                     <option>Content Production</option>
@@ -78,27 +93,31 @@ export function ContactClient() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-[color:var(--ink)]">Budget range</label>
-                  <select className="mt-2 w-full rounded-xl border border-[color:var(--border)] bg-white px-4 py-3 text-sm outline-none focus:border-[color:var(--ember)]">
-                    <option>Under ₹2L / month</option>
-                    <option>₹2L – ₹5L / month</option>
-                    <option>₹5L – ₹10L / month</option>
-                    <option>₹10L+ / month</option>
-                    <option>Project-based</option>
-                  </select>
-                </div>
-                <div>
                   <label className="text-sm font-medium text-[color:var(--ink)]">Tell us about your brand</label>
                   <textarea
+                    name="message"
                     rows={5}
                     required
                     placeholder="Where you are, where you want to go, what's in the way..."
                     className="mt-2 w-full rounded-xl border border-[color:var(--border)] bg-white px-4 py-3 text-sm outline-none focus:border-[color:var(--ember)] resize-none"
                   />
                 </div>
-                <button type="submit" className="btn-primary self-start">
-                  Send message <ion-icon name="paper-plane-outline"></ion-icon>
-                </button>
+
+                <label className="flex items-center gap-3 text-sm text-[color:var(--ink)]/80">
+                  <input
+                    type="checkbox"
+                    name="not_robot"
+                    required
+                    className="h-4 w-4 rounded border-[color:var(--border)] accent-[color:var(--ember)]"
+                  />
+                  I'm not a robot
+                </label>
+
+                {state.status === "error" && state.message ? (
+                  <p className="text-sm text-red-600">{state.message}</p>
+                ) : null}
+
+                <SubmitButton />
               </form>
             )}
           </div>
@@ -140,16 +159,29 @@ export function ContactClient() {
               </div>
             </div>
 
+            {/* Studio map — commented out for now, not needed yet.
             <div className="rounded-3xl overflow-hidden aspect-[4/3] bg-gradient-to-br from-[color:var(--cream)] to-[color:var(--ember)]/25 grid place-items-center">
               <div className="text-center">
                 <ion-icon name="map-outline" style={{ fontSize: "48px", color: "var(--ember)" }}></ion-icon>
                 <p className="mt-3 text-sm font-medium text-[color:var(--ink)]">Studio · Mumbai</p>
               </div>
             </div>
+            */}
           </div>
         </div>
       </section>
     </>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button type="submit" disabled={pending} className="btn-primary self-start disabled:opacity-60">
+      {pending ? "Sending…" : "Send message"}
+      <ion-icon name="paper-plane-outline"></ion-icon>
+    </button>
   );
 }
 

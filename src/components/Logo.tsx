@@ -4,7 +4,7 @@ export function Logo() {
   return (
     <Link href="/" className="inline-flex items-center" aria-label="Brewdminds home">
       {/* eslint-disable-next-line @next/next/no-img-element -- static brand SVG, no next/image optimization needed */}
-      <img src="/logo-colored.svg" alt="" width={160} height={108} className="h-14 w-auto" />
+      <img src="/brewd-color.svg" alt="" width={368} height={100} className="h-9 w-auto" />
     </Link>
   );
 }

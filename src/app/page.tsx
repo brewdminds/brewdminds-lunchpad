@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -59,16 +60,44 @@ export default function HomePage() {
           here (e.g. `bg-black/40`) before the content block for text legibility.
         */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--cream)] via-white to-white" />
-          <div className="absolute top-1/3 left-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[color:var(--ember)]/10 blur-3xl" />
+          <div className="absolute inset-0 bg-white" />
+          <div className="absolute top-1/2 right-[10%] h-[600px] w-[600px] -translate-y-1/2 rounded-full bg-[color:var(--ember)]/10 blur-3xl" />
+          <div className="absolute top-1/2 right-0 hidden w-[65%] max-w-[820px] -translate-y-1/2 lg:block">
+            <div className="animate-rise">
+              <div className="animate-float">
+                <Image
+                  src="/brew-hero-v2.png"
+                  alt=""
+                  aria-hidden="true"
+                  width={1536}
+                  height={1024}
+                  priority
+                  sizes="820px"
+                  className="h-auto w-full"
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="container-page text-center animate-rise">
-          <p className="eyebrow justify-center">Social · Strategy · Craft</p>
-          <div className="mt-10 flex items-center justify-center">
+        <div className="container-page animate-rise">
+          <p className="eyebrow">Social · Strategy · Craft</p>
+          <h1 className="mt-5 max-w-xl text-5xl md:text-6xl leading-[1.05] tracking-tight">
+            Brands don't go viral.
+            <br />
+            They get <span className="italic text-[color:var(--ember)]">built</span>.
+          </h1>
+          <p className="mt-6 max-w-lg text-lg text-[color:var(--ink)]/75">
+            We combine sharp strategy with cinematic craft to help ambitious brands show up
+            right — everywhere it matters.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link href="/contact" className="btn-primary">
               Let's Talk Strategy
               <ion-icon name="arrow-forward-outline"></ion-icon>
+            </Link>
+            <Link href="/services" className="btn-ghost">
+              See Our Thinking
             </Link>
           </div>
         </div>
