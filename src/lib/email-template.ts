@@ -21,7 +21,7 @@ function row(label: string, value: string): string {
   return `
     <tr>
       <td style="padding:12px 0;border-bottom:1px solid #ede0d3;">
-        <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#a64b2e;font-family:Arial,Helvetica,sans-serif;">${escapeHtml(label)}</p>
+        <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#86412d;font-family:Arial,Helvetica,sans-serif;">${escapeHtml(label)}</p>
         <p style="margin:4px 0 0;font-size:15px;line-height:1.5;color:#333333;font-family:Arial,Helvetica,sans-serif;">${escapeHtml(value)}</p>
       </td>
     </tr>`;
@@ -42,7 +42,7 @@ export function renderContactEmailHtml(fields: ContactFormFields): string {
         <td align="center">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background-color:#ffffff;border-radius:16px;overflow:hidden;">
             <tr>
-              <td style="background-color:#c65d3a;padding:28px 32px;">
+              <td style="background-color:#a05842;padding:28px 32px;">
                 <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;font-family:Arial,Helvetica,sans-serif;">
                   Brewd<span style="color:#f4eae1;">minds</span>
                 </p>
@@ -60,7 +60,7 @@ export function renderContactEmailHtml(fields: ContactFormFields): string {
                   ${row("Company", fields.company)}
                   ${row("Service of interest", fields.service)}
                 </table>
-                <p style="margin:20px 0 6px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#a64b2e;font-family:Arial,Helvetica,sans-serif;">
+                <p style="margin:20px 0 6px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#86412d;font-family:Arial,Helvetica,sans-serif;">
                   Message
                 </p>
                 <p style="margin:0;font-size:15px;line-height:1.6;color:#333333;white-space:pre-wrap;font-family:Arial,Helvetica,sans-serif;">${escapeHtml(fields.message)}</p>

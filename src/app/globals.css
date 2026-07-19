@@ -48,11 +48,12 @@
   --radius: 0.75rem;
 
   --background: oklch(1 0 0);                     /* #ffffff */
-  --foreground: oklch(0.395 0 0);                 /* #494949 */
-  --ink: oklch(0.395 0 0);                        /* #494949 */
+  --foreground: oklch(0.26 0.015 40);             /* warm dark brown-black */
+  --ink: oklch(0.26 0.015 40);                    /* warm dark brown-black */
   --cream: oklch(0.938 0.023 62);                 /* #f4eae1 */
-  --ember: oklch(0.612 0.148 40);                 /* warm terracotta accent */
-  --ember-deep: oklch(0.508 0.145 38);
+  --ember: oklch(0.54 0.10 38);                   /* muted terracotta-brown accent */
+  --ember-deep: oklch(0.46 0.10 37);
+  --ember-light: oklch(0.82 0.045 42);            /* pale tint, loader accent only */
 
   --card: oklch(1 0 0);
   --card-foreground: var(--foreground);
@@ -218,22 +219,44 @@
   animation: rise-in 0.7s ease-out both;
 }
 
-@keyframes brew-bounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
+.brew-loader-grid {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  color: var(--ember);
 }
 
-.brew-dot {
-  animation: brew-bounce 1.4s ease-in-out infinite both;
+.brew-loader-grid div {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: brew-loader-grid-pulse 1.2s linear infinite;
 }
 
-.brew-dot-1 { animation-delay: -0.32s; }
-.brew-dot-2 { animation-delay: -0.16s; }
+/* Delay = (row + col) * 0.4s, so dots on the same top-left-to-bottom-right diagonal share a
+   phase — the pulse reads as a diagonal wave rippling out from the top-left corner. */
+.brew-loader-grid div:nth-child(1) { top: 8px;  left: 8px;  animation-delay: 0s; }
+.brew-loader-grid div:nth-child(2) { top: 8px;  left: 32px; animation-delay: -0.4s; }
+.brew-loader-grid div:nth-child(3) { top: 8px;  left: 56px; animation-delay: -0.8s; }
+.brew-loader-grid div:nth-child(4) { top: 32px; left: 8px;  animation-delay: -0.4s; }
+.brew-loader-grid div:nth-child(5) { top: 32px; left: 32px; animation-delay: -0.8s; }
+.brew-loader-grid div:nth-child(6) { top: 32px; left: 56px; animation-delay: -1.2s; }
+.brew-loader-grid div:nth-child(7) { top: 56px; left: 8px;  animation-delay: -0.8s; }
+.brew-loader-grid div:nth-child(8) { top: 56px; left: 32px; animation-delay: -1.2s; }
+.brew-loader-grid div:nth-child(9) { top: 56px; left: 56px; animation-delay: -1.6s; }
+
+@keyframes brew-loader-grid-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .brew-dot {
+  .brew-loader-grid div {
     animation: none;
-    transform: scale(1);
+    opacity: 0.75;
   }
 }
 

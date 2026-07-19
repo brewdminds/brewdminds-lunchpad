@@ -35,10 +35,10 @@ export function SiteLoader() {
         fading ? "opacity-0" : "opacity-100"
       }`}
     >
-      <div className="flex items-center gap-2">
-        <span className="brew-dot brew-dot-1 h-[18px] w-[18px] rounded-full bg-[color:var(--ember)]" />
-        <span className="brew-dot brew-dot-2 h-[18px] w-[18px] rounded-full bg-[color:var(--ember)]" />
-        <span className="brew-dot h-[18px] w-[18px] rounded-full bg-[color:var(--ember)]" />
+      <div className="brew-loader-grid">
+        {Array.from({ length: 9 }).map((_, i) => (
+          <div key={i} />
+        ))}
       </div>
       <p className="eyebrow">Brewing…</p>
     </div>

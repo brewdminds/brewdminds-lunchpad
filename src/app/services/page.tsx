@@ -95,32 +95,32 @@ export default function ServicesPage() {
       </section>
 
       <section className="container-page pb-24">
-        <div className="grid gap-6">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {pillars.map((p, i) => (
             <article
               key={p.title}
-              className="group rounded-3xl border border-[color:var(--border)] bg-white p-8 md:p-10 hover:border-[color:var(--ember)] transition-colors"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--border)] bg-white transition-colors hover:border-[color:var(--ember)]"
             >
-              <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] items-start">
-                <div className="flex items-start gap-5">
-                  <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[color:var(--cream)] text-[color:var(--ember)] group-hover:bg-[color:var(--ember)] group-hover:text-white transition-colors">
-                    <ion-icon name={p.icon} style={{ fontSize: "26px" }}></ion-icon>
-                  </div>
-                  <div className="min-w-0">
-                    <span className="text-xs font-semibold tracking-widest text-[color:var(--ember)]">
-                      0{i + 1}
-                    </span>
-                    <h2 className="mt-1 text-2xl md:text-3xl">{p.title}</h2>
-                    <p className="mt-3 text-[color:var(--ink)]/75">{p.intro}</p>
-                  </div>
-                </div>
+              {/* visual block — icon placeholder for now, swap for an image/illustration later */}
+              <div className="grid aspect-[16/10] place-items-center bg-gradient-to-br from-[color:var(--cream)] to-[color:var(--ember)]/20">
+                <ion-icon name={p.icon} style={{ fontSize: "40px", color: "var(--ember)" }}></ion-icon>
+              </div>
 
-                <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-3 lg:pl-6 lg:border-l lg:border-[color:var(--border)]">
+              <div className="flex flex-1 flex-col p-6">
+                <span className="text-xs font-semibold tracking-widest text-[color:var(--ember)]">
+                  0{i + 1}
+                </span>
+                <h2 className="mt-2 text-xl transition-colors group-hover:text-[color:var(--ember)]">
+                  {p.title}
+                </h2>
+                <p className="mt-2 text-sm text-[color:var(--ink)]/70">{p.intro}</p>
+
+                <ul className="mt-4 space-y-2 border-t border-[color:var(--border)] pt-4">
                   {p.items.map((it) => (
-                    <li key={it} className="flex items-start gap-3 text-sm text-[color:var(--ink)]/85">
+                    <li key={it} className="flex items-start gap-2 text-sm text-[color:var(--ink)]/85">
                       <ion-icon
                         name="checkmark-circle-outline"
-                        style={{ fontSize: "18px", color: "var(--ember)", marginTop: "2px", flexShrink: 0 }}
+                        style={{ fontSize: "16px", color: "var(--ember)", marginTop: "2px", flexShrink: 0 }}
                       ></ion-icon>
                       <span>{it}</span>
                     </li>
